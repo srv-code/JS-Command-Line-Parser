@@ -6,7 +6,7 @@ initDebugger();
 
 try {
   const options = parse(process.argv);
-  console.log('Parsed option', { options });
+  console.log('Parsed option', { options: JSON.stringify(options) });
 } catch (e) {
   console.error('Error:', e);
   // console.error('Error:', e.message);

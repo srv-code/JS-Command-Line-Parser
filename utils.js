@@ -22,8 +22,15 @@ function registerOption(
   { isShort = false, isValue = false, valueFor = null }
 ) {
   log('registerOption::init', arguments);
+
+  if (!string) throw new InternalError('!isValue', { string });
   if (isValue !== !!valueFor)
-    throw new InternalError('isValue !== !valueFor', { isValue, valueFor });
+    throw new InternalError('isValue !== !valueFor', {
+      isValue,
+      valueFor,
+      isShort,
+      string,
+    });
   // let _option
   // let _currentOption
 
@@ -115,15 +122,21 @@ function parse(argv) {
       /* NOTE: Short option */
       if (!argv[i][1]) throw new InvalidArgumentException(argv[i]);
       isShort = true;
+      valueFor = null;
       // receiveValueFor = false;
     } else if (argv[i].startsWith('--')) {
       /* NOTE: Long option */
       if (!argv[i][2]) throw new InvalidArgumentException(argv[i]);
-      isLong = true;
+      valueFor = null;
+      // isLong = true;
       // receiveValueFor = argv[i].substring(2);
     } else {
       /* NOTE: Option value */
       isValue = true;
+      if (!valueFor) {
+        if (i === 2) throw new InvalidArgumentException(argv[i]);
+        valueFor = argv[i - 1].substring(argv[i - 1].startsWith('--') ? 2 : 1);
+      }
     }
 
     // if(!value)
@@ -133,9 +146,14 @@ function parse(argv) {
     // console.log(
     //   'asdghjk'.split('')
     // );
+
     let optionString;
-    if (isShort) optionString = argv[i].substring(1).split('');
+    if (isValue) optionString = argv[i];
+    else if (isShort) optionString = argv[i].substring(1).split('');
     else optionString = argv[i].substring(2);
+
+    if (!optionString)
+      throw new InternalError('!optionString', { arg: argv[i] });
 
     registerOption(optionString, {
       isShort,

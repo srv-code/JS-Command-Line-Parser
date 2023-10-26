@@ -6,7 +6,7 @@ class InternalError extends Error {
 
 class IllegalOptionValueException extends Error {
   constructor(msg, option, value = null) {
-    super(`${msg}. Option=${option}, Value=${value}`);
+    super(`${msg}. option description=${option}, value=${value}`);
     this.option = option;
     this.msg = msg;
     this.value = value;

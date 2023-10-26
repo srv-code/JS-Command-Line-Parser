@@ -75,9 +75,9 @@ function registerOption(
  * @throws IllegalOptionValueException
  */
 function validateOptionsAndValues() {
-  const reg = {};
+  const keys = [];
   for (const op of optionsProvided) {
-    if (op.id in reg)
+    if (keys.includes(op.id))
       throw new IllegalOptionValueException(
         'Duplicate option value',
         op.description
@@ -88,6 +88,8 @@ function validateOptionsAndValues() {
         'Missing mandatory option value',
         op.description
       );
+
+    keys.push(op.id);
   }
 }
 

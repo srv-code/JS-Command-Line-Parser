@@ -1,8 +1,10 @@
-const { log, initDebugger } = require('./debug');
-const { parse } = require('./utils');
+const { setModes, AppModes } = require('./config/app.config');
+const { log, initDebugger } = require('./util/debug');
+const { parse } = require('./util/utils');
 
 initDebugger();
 // log('>>', process.argv);
+setModes(AppModes.DEMO, AppModes.VERBOSE);
 
 try {
   const options = parse(process.argv);

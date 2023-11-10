@@ -1,10 +1,10 @@
-const { OPTIONS } = require('./data');
+const { OPTIONS } = require('../data/data');
 const { log } = require('./debug');
 const {
   IllegalOptionValueException,
   InvalidArgumentException,
   InternalError,
-} = require('./errors');
+} = require('../data/errors');
 
 const optionsProvided = [];
 

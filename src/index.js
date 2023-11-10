@@ -1,10 +1,19 @@
-const { setModes, AppModes } = require('./config/app.config');
+const {
+  AppModes,
+  setModes,
+  isModeSet,
+  addModes,
+} = require('./config/app.config');
 const { log, initDebugger } = require('./util/debug');
 const { parse } = require('./util/utils');
 
-initDebugger();
+// initDebugger();
 // log('>>', process.argv);
-setModes(AppModes.DEMO, AppModes.VERBOSE);
+
+addModes(AppModes.DEMO);
+// log('has mode', isModeSet(AppModes.VERBOSE));
+// setModes(AppModes.VERBOSE);
+// log('has mode', isModeSet(AppModes.VERBOSE));
 
 try {
   const options = parse(process.argv);
